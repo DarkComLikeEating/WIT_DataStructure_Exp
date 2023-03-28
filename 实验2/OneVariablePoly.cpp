@@ -1,3 +1,4 @@
+/*----------以下是OneVariablePoly.cpp的实现----------*/
 #include <iostream>
 #include <malloc.h>
 
@@ -11,12 +12,12 @@ typedef struct LNode {
 	struct LNode * next;
 } OneVarPoly;
 
-void CreatePolyR(OneVarPoly * &P) {
+void CreatePolyR(OneVarPoly * &P) {		//用链表尾插法的方法，创建一元多项式
 	int deg = 0, co[25], flag = true;
 	while (flag) {
 		cout << "请输入一元多项式的最高次项的次数：" << endl;
 		cin >> deg;
-		if (deg > Maxsize) {
+		if (deg > Maxsize) {			//判断输入的一元多项式是否超过程序允许的最大项数
 			cout << "超出最大次数值，请重新输入。" << endl;
 		} else {
 			flag = false;
@@ -27,7 +28,7 @@ void CreatePolyR(OneVarPoly * &P) {
 		cin >> co[i];
 	}
 	
-	OneVarPoly * s, * r;
+	OneVarPoly * s, * r;				//以下为单链表的尾插法
 	P = (OneVarPoly * ) malloc (sizeof(OneVarPoly));
 	r = P;
 	for (int i = 0; i <= deg; i ++) {
@@ -40,16 +41,14 @@ void CreatePolyR(OneVarPoly * &P) {
 	r->next = NULL;
 }
 
-OneVarPoly * Add(OneVarPoly * P1, OneVarPoly * P2) {
-	OneVarPoly * p, * prep,* q, * ins, * ans;
+OneVarPoly * Add(OneVarPoly * P1, OneVarPoly * P2) {		//给出两个一元多项式，并返回相加的结果
+	OneVarPoly * p, * prep,* q, * ins, * ans;				//以下为伪代码转换成算法
 	if (P1->next->exp >= P2->next->exp) {
 		p = P1->next, prep = P1, q = P2->next, ans = P1;
 	} else {
 		p = P2->next, prep = P2, q = P1->next, ans = P2;
 	}
 
-	
-	
 	while (p && q) {
 		if (p->exp == 0) {
 			p = p->next;
@@ -102,7 +101,7 @@ OneVarPoly * Add(OneVarPoly * P1, OneVarPoly * P2) {
 	return ans;
 }
 
-void DispPoly(OneVarPoly * P) {
+void DispPoly(OneVarPoly * P) {			//输出一元多项式
 	OneVarPoly * p = P->next;
 	while (p != NULL) {
 		if (p->exp != 0) {
